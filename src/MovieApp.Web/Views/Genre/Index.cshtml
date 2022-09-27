@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Genre>
+
+@{
+    ViewData["Title"] = "Genre list";
+}
+
+<div class="row pt-5">
+    <div class="col-xl-10">
+        <h3>Genre list</h3>
+        <div style="border-bottom: 10px solid #1E122C; margin-left: 1vw; width: 4vw;"></div>
+    </div>
+    <div class="col-xl-2">
+        <a asp-action="Create" class="btn btn-success float-right" style="background-color: #3d2b52; border-color: #3d2b52;">Add genre</a>
+    </div>
+</div>
+
+<nav aria-label="breadcrumb" class="pt-3">
+    <ol class="breadcrumb ps-3">
+        <li class="breadcrumb-item active" aria-current="page">Genre list</li>
+    </ol>
+</nav>
+
+<table style="margin-top: 20px;" class="table table-condensed" id="genreTable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td  class="d-flex justify-content-end">
+                    <a type="submit" asp-action="Edit" asp-route-id="@item.Id" class="btn " style="margin-left: 0.5vw; background-color: #4292cf; border-color: #83c0e9; color: white">
+                        Edit
+                    </a>
+                    <form method="post">
+                        <button asp-action="Delete" asp-route-id="@item.Id" type="submit" class="btn" style="margin-left: 0.5vw; background-color: #ee3435; border-color: #f05455; color: white ">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

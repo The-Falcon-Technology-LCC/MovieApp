@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Create movie";
+}
+
+<div class="row pt-5">
+    <div class="col-xl-10">
+        <h3>Add movie</h3>
+        <div style="border-bottom: 10px solid #1E122C; margin-left: 1vw; width: 5vw;"></div>
+    </div>
+</div>
+
+<nav aria-label="breadcrumb" class="pt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="Index">Movie list</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add movie</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-xl-12">
+        <form asp-action="Create">
+            <partial name="_CreateOrEdit" />
+        </form>
+    </div>
+</div>

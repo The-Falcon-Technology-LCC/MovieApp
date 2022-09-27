@@ -1,0 +1,40 @@
+﻿@model MovieResult
+
+@{
+    ViewData["Title"] = "Movie details";
+}
+
+<div class="row pt-5">
+    <div class="col-xl-10">
+        <h3>@Model.Title</h3>
+        <div style="border-bottom: 10px solid #1E122C; margin-left: 1vw; width: 5vw;"></div>
+    </div>
+</div>
+
+<nav aria-label="breadcrumb" class="pt-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="Index">Movie list</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Title details</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <table class="table table-borderless">
+  <tbody>
+    <tr>
+      <th scope="row" class="d-flex justify-content-end">Director:</th>
+      <td>@Model.Director</td>
+    </tr>
+    <tr>
+      <th scope="row" class="d-flex justify-content-end">Genre:</th>
+      <td>@Model.Genres</td>
+
+    </tr>
+    <tr>
+      <th scope="row" class="d-flex justify-content-end">Details:</th>
+      <td>@Model.Description</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
