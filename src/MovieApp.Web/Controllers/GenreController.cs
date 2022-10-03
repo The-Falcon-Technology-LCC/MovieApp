@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApp.DAL;
 using MovieApp.Model;
@@ -11,7 +11,7 @@ public class GenreController : Controller
 
     public GenreController(MovieAppDbContext dbContext)
     {
-        this._dbContext = dbContext;
+        _dbContext = dbContext;
     }
 
     public async Task<IActionResult> Index()
@@ -55,7 +55,6 @@ public class GenreController : Controller
     }
 
     [HttpPost]
-    [ActionName("Edit")]
     public async Task<IActionResult> Edit(Genre updatedGenre)
     {
         if (!ModelState.IsValid)

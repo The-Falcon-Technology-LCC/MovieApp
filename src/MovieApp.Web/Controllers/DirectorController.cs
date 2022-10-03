@@ -11,7 +11,7 @@ public class DirectorController : Controller
 
     public DirectorController(MovieAppDbContext dbContext)
     {
-        this._dbContext = dbContext;
+        _dbContext = dbContext;
     }
 
     public async Task<IActionResult> Index()
@@ -55,7 +55,6 @@ public class DirectorController : Controller
     }
 
     [HttpPost]
-    [ActionName("Edit")]
     public async Task<IActionResult> Edit(Director updatedDirector)
     {
         if (!ModelState.IsValid)

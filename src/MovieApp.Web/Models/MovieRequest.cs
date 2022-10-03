@@ -15,6 +15,11 @@ namespace MovieApp.Web.Models
         [Required]
         public IEnumerable<int>? GenreId { get; set; }
 
+        public MovieRequest()
+        {
+
+        }
+
         public MovieRequest(Movie movie)
         {
             Id = movie.Id;

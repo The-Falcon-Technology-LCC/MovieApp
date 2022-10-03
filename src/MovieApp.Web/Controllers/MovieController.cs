@@ -14,7 +14,7 @@ public class MovieController : Controller
 
     public MovieController(MovieAppDbContext dbContext)
     {
-        this._dbContext = dbContext;
+        _dbContext = dbContext;
     }
 
     public async Task<IActionResult> Index()
@@ -88,7 +88,6 @@ public class MovieController : Controller
     }
 
     [HttpPost]
-    [ActionName("Edit")]
     public async Task<IActionResult> Edit(MovieRequest request)
     {
         if (!ModelState.IsValid)
@@ -126,6 +125,17 @@ public class MovieController : Controller
         await _dbContext.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var movie = await _dbContext.Movie.Include(m => m.Director)
+                                          .Include(m => m.GenreMovie)
+                                          .ThenInclude(gm => gm.Genre)
+                                          .FirstOrDefaultAsync(d => d.Id == id);
+
+        return View(new MovieResult(movie));
     }
 
     private async Task GetDirector()
