@@ -12,7 +12,7 @@ namespace MovieApp.Web
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<MovieAppDbContext>(options => options.UseSqlite("Data Source=../../db/MovieAppDb.db"));
+            builder.Services.AddDbContext<MovieAppDbContext>(options => options.UseSqlite("Data Source=../db/MovieAppDb.db"));
 
             var app = builder.Build();
 
