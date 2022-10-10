@@ -143,8 +143,14 @@ public class MovieController : Controller
         var direcotrList = await _dbContext.Director.OrderBy(d => d.FirstName).ThenBy(d => d.LastName).ToListAsync();
 
         List<SelectListItem> selectItems = new List<SelectListItem>();
-        selectItems.Add(new SelectListItem("Select", "", false));
-        selectItems.AddRange(direcotrList.Select(d => new SelectListItem(d.FullName, d.Id.ToString())).ToList());
+        var firstItem = new SelectListItem("Select", "", false);
+        selectItems.Add(firstItem);
+
+        foreach (var direcotr in direcotrList)
+        {
+            var item = new SelectListItem(direcotr.FullName, direcotr.Id.ToString());
+            selectItems.Add(item);
+        }
 
         ViewBag.DirectorList = selectItems;
     }
@@ -154,8 +160,14 @@ public class MovieController : Controller
         var genreList = await _dbContext.Genre.OrderBy(g => g.Name).ToListAsync();
 
         List<SelectListItem> selectItems = new List<SelectListItem>();
-        selectItems.Add(new SelectListItem("Select", "", false));
-        selectItems = genreList.Select(g => new SelectListItem(g.Name, g.Id.ToString())).ToList();
+        var firstItem = new SelectListItem("Select", "", false);
+        selectItems.Add(firstItem);
+
+        foreach(var genre in genreList)
+        {
+            var item = new SelectListItem(genre.Name, genre.Id.ToString());
+            selectItems.Add(item);
+        }
 
         ViewBag.GenreList = selectItems;
     }
