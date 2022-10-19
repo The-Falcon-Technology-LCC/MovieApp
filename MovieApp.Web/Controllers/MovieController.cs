@@ -69,52 +69,8 @@ public class MovieController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var movie = await _dbContext.Movie.Include(m => m.Director)
-                                  .Include(m => m.GenreMovie)
-                                  .ThenInclude(gm => gm.Genre)
-                                  .FirstOrDefaultAsync(d => d.Id == id);
-
-        if (movie == null)
-        {
-            return NotFound();
-        }
-
-        var movieRequest = new MovieRequest(movie);
-
-        await GetDirector();
-        await GetGenre();
-
+        var movieRequest = new MovieRequest();
         return View(movieRequest);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Edit(MovieRequest request)
-    {
-        if (!ModelState.IsValid)
-        {
-            await GetDirector();
-            await GetGenre();
-
-            return View();
-        }
-
-        var updatedMovie = await _dbContext.Movie.Include(m => m.Director)
-                                          .Include(m => m.GenreMovie)
-                                          .ThenInclude(gm => gm.Genre)
-                                          .FirstOrDefaultAsync(d => d.Id == request.Id);
-
-        updatedMovie.Title = request.Title;
-        updatedMovie.Description = request.Description;
-        updatedMovie.DirectorId = request.DirectorId;
-        updatedMovie.GenreMovie = request.GenreId.Select(gm => new GenreMovie()
-        {
-            GenreId = gm
-        }).ToList();
-
-        _dbContext.Update(updatedMovie);
-        await _dbContext.SaveChangesAsync();
-
-        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
