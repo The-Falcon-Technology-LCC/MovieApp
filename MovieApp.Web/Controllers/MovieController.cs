@@ -1,5 +1,6 @@
 #nullable disable
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MovieApp.DAL;
 using MovieApp.Web.Models;
 
@@ -31,5 +32,16 @@ public class MovieController : Controller
     {
         var movieRequest = new MovieRequest();
         return View(movieRequest);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var movie = await _dbContext.Movie.Include(m => m.Director)
+                                          .Include(m => m.GenreMovie)
+                                          .ThenInclude(gm => gm.Genre)
+                                          .FirstOrDefaultAsync(d => d.Id == id);
+
+        return View(new MovieResult(movie));
     }
 }
