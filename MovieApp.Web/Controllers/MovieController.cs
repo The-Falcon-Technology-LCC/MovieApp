@@ -140,15 +140,15 @@ public class MovieController : Controller
 
     private async Task GetDirector()
     {
-        var direcotrList = await _dbContext.Director.OrderBy(d => d.FirstName).ThenBy(d => d.LastName).ToListAsync();
+        var direcotorList = await _dbContext.Director.OrderBy(d => d.FirstName).ThenBy(d => d.LastName).ToListAsync();
 
         List<SelectListItem> selectItems = new List<SelectListItem>();
         var firstItem = new SelectListItem("Select", "", false);
         selectItems.Add(firstItem);
 
-        foreach (var direcotr in direcotrList)
+        foreach (var direcotor in direcotorList)
         {
-            var item = new SelectListItem(direcotr.FullName, direcotr.Id.ToString());
+            var item = new SelectListItem(direcotor.FullName, direcotor.Id.ToString());
             selectItems.Add(item);
         }
 
