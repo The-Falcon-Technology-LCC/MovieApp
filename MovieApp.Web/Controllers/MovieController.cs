@@ -1,5 +1,6 @@
 #nullable disable
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieApp.DAL;
 using MovieApp.Model;
@@ -81,5 +82,39 @@ public class MovieController : Controller
                                           .FirstOrDefaultAsync(d => d.Id == id);
 
         return View(new MovieResult(movie));
+    }
+
+    private async Task GetDirector()
+    {
+        var direcotorList = await _dbContext.Director.OrderBy(d => d.FirstName).ThenBy(d => d.LastName).ToListAsync();
+
+        List<SelectListItem> selectItems = new List<SelectListItem>();
+        var firstItem = new SelectListItem("Select", "", false);
+        selectItems.Add(firstItem);
+
+        foreach (var direcotor in direcotorList)
+        {
+            var item = new SelectListItem(direcotor.FullName, direcotor.Id.ToString());
+            selectItems.Add(item);
+        }
+
+        ViewBag.DirectorList = selectItems;
+    }
+
+    private async Task GetGenre()
+    {
+        var genreList = await _dbContext.Genre.OrderBy(g => g.Name).ToListAsync();
+
+        List<SelectListItem> selectItems = new List<SelectListItem>();
+        var firstItem = new SelectListItem("Select", "", false);
+        selectItems.Add(firstItem);
+
+        foreach (var genre in genreList)
+        {
+            var item = new SelectListItem(genre.Name, genre.Id.ToString());
+            selectItems.Add(item);
+        }
+
+        ViewBag.GenreList = selectItems;
     }
 }
