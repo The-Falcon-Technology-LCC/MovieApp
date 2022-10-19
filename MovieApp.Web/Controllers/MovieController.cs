@@ -106,8 +106,6 @@ public class MovieController : Controller
         var genreList = await _dbContext.Genre.OrderBy(g => g.Name).ToListAsync();
 
         List<SelectListItem> selectItems = new List<SelectListItem>();
-        var firstItem = new SelectListItem("Select", "", false);
-        selectItems.Add(firstItem);
 
         foreach (var genre in genreList)
         {
