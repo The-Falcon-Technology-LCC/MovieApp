@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApp.DAL;
+using MovieApp.Model;
 using MovieApp.Web.Models;
 
 namespace TFT.MovieLibrary.Web.Controllers;
@@ -30,7 +31,38 @@ public class MovieController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
+        await GetDirector();
+        await GetGenre();
+
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(MovieRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            await GetDirector();
+            await GetGenre();
+
+            return View();
+        }
+
+        var newMovie = new Movie()
+        {
+            Title = request.Title,
+            Description = request.Description,
+            DirectorId = request.DirectorId,
+            GenreMovie = request.GenreId.Select(gm => new GenreMovie()
+            {
+                GenreId = gm
+            }).ToList()
+        };
+
+        await _dbContext.Movie.AddAsync(newMovie);
+        await _dbContext.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
